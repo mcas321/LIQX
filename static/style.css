@@ -1,0 +1,411 @@
+:root {
+    --bg: #0f0f0f;
+    --text: #e0e0e0;
+    --border: #1e1e1e;
+    --surface-1: #141414;
+    --surface-2: #161616;
+    --surface-3: #1a1a1a;
+    --surface-4: #222;
+    --surface-hover: #252525;
+    --border-input: #333;
+    --border-btn: #2a2a2a;
+    --muted: #888;
+    --muted-2: #aaa;
+    --muted-3: #666;
+    --muted-4: #555;
+    --muted-5: #444;
+    --input-bg: #111;
+    --overlay: rgba(0, 0, 0, 0.7);
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --accent-light: #60a5fa;
+    --win: #22c55e;
+    --loss: #ef4444;
+    --grid-gap: #1e1e1e;
+}
+
+[data-theme="light"] {
+    --bg: #f5f5f5;
+    --text: #1a1a1a;
+    --border: #e0e0e0;
+    --surface-1: #ffffff;
+    --surface-2: #fafafa;
+    --surface-3: #f0f0f0;
+    --surface-4: #e8e8e8;
+    --surface-hover: #eaeaea;
+    --border-input: #ccc;
+    --border-btn: #ddd;
+    --muted: #666;
+    --muted-2: #555;
+    --muted-3: #888;
+    --muted-4: #999;
+    --muted-5: #aaa;
+    --input-bg: #fff;
+    --overlay: rgba(0, 0, 0, 0.4);
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --accent-light: #60a5fa;
+    --win: #16a34a;
+    --loss: #dc2626;
+    --grid-gap: #e0e0e0;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background 0.2s, color 0.2s;
+}
+
+header {
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.header-logo {
+    height: 50px;
+    width: auto;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+header .stats {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+}
+
+.theme-toggle {
+    background: var(--surface-3);
+    border: 1px solid var(--border-btn);
+    color: var(--text);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: background 0.15s;
+}
+
+.theme-toggle:hover { background: var(--surface-hover); }
+
+.stat-value { font-weight: 600; }
+.stat-positive { color: var(--win); }
+.stat-negative { color: var(--loss); }
+
+.calendar-wrapper {
+    max-width: 1100px;
+    margin: 32px auto;
+    padding: 0 24px;
+}
+
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-nav h2 {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.calendar-nav button {
+    background: var(--surface-3);
+    border: 1px solid var(--border-btn);
+    color: var(--text);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.15s;
+}
+
+.calendar-nav button:hover { background: var(--surface-hover); }
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: var(--grid-gap);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.calendar-header {
+    background: var(--surface-2);
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.calendar-day {
+    background: var(--surface-1);
+    min-height: 110px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+}
+
+.calendar-day:hover { background: var(--surface-3); }
+.calendar-day.empty { cursor: default; opacity: 0.3; }
+.calendar-day.today { outline: 1px solid var(--accent); outline-offset: -1px; }
+
+.day-number {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--muted-2);
+}
+
+.day-summary {
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.day-pnl {
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.day-trades-count {
+    font-size: 10px;
+    color: var(--muted-3);
+}
+
+.trade-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 2px;
+}
+
+.trade-dot.win { background: var(--win); }
+.trade-dot.loss { background: var(--loss); }
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--overlay);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+    background: var(--surface-3);
+    border: 1px solid var(--border-btn);
+    border-radius: 12px;
+    width: 480px;
+    max-width: 95vw;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+.modal h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.modal-trades {
+    margin-bottom: 20px;
+}
+
+.trade-item {
+    background: var(--surface-4);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+}
+
+.trade-item .trade-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.trade-item .trade-op {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+}
+
+.trade-item .trade-op.long { color: var(--win); }
+.trade-item .trade-op.short { color: var(--loss); }
+.trade-item .trade-op .long { color: var(--win); }
+.trade-item .trade-op .short { color: var(--loss); }
+
+.trade-item .trade-times {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.trade-item .trade-profit {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.trade-item .delete-btn {
+    background: none;
+    border: none;
+    color: var(--muted-4);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: color 0.15s;
+}
+
+.trade-item .delete-btn:hover { color: var(--loss); }
+
+.trade-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group.full { grid-column: 1 / -1; }
+
+.form-group label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select {
+    background: var(--input-bg);
+    border: 1px solid var(--border-input);
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--accent);
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background 0.15s;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-secondary {
+    background: var(--surface-4);
+    color: var(--text);
+    border: 1px solid var(--border-input);
+}
+
+.btn-secondary:hover { background: var(--surface-hover); }
+
+.no-trades {
+    text-align: center;
+    color: var(--muted-4);
+    font-size: 13px;
+    padding: 16px;
+}
+
+.time-toggle {
+    grid-column: 1 / -1;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px 0;
+    text-align: left;
+}
+
+.time-toggle:hover { color: var(--accent-light); }
+
+.time-fields { display: none; grid-column: 1 / -1; grid-template-columns: 1fr 1fr; gap: 12px; }
+.time-fields.visible { display: grid; }
+
+.optional-field { display: none; grid-column: 1 / -1; }
+.optional-field.visible { display: block; }
+
+.trade-duration {
+    color: var(--muted-3);
+    font-size: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 12px;
+    color: var(--muted-5);
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+}
